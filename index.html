@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CityPulse NG — Your City. All in One App.</title>
+<meta name="description" content="Order food, book tables, buy event tickets, and reserve hotels — all in one Lagos app.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#080810;--gold:#FF3366;--cyan:#00D4FF;--border:rgba(255,255,255,0.1);--tx2:rgba(255,255,255,0.6);--tx3:rgba(255,255,255,0.35);--gray:rgba(255,255,255,0.06)}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:#fff;overflow-x:hidden;line-height:1.6}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(to bottom,rgba(8,8,16,0.95),transparent);backdrop-filter:blur(12px)}
+.logo{font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px}
+.logo-dot{width:10px;height:10px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+.nav-cta{background:var(--gold);color:#fff;border:none;padding:10px 22px;border-radius:100px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 80px;position:relative;overflow:hidden}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,51,102,.15) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,51,102,.12);border:1px solid rgba(255,51,102,.3);color:var(--gold);padding:6px 14px;border-radius:100px;font-size:12px;font-weight:600;margin-bottom:28px}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold)}
+h1{font-size:clamp(40px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;max-width:800px}
+h1 span{color:var(--gold)}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--tx2);max-width:520px;margin-bottom:48px;line-height:1.7}
+.waitlist-form{display:flex;gap:10px;max-width:480px;width:100%;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+.waitlist-input{flex:1;min-width:220px;background:rgba(255,255,255,.07);border:1px solid var(--border);color:#fff;padding:16px 20px;border-radius:14px;font-size:15px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s}
+.waitlist-input::placeholder{color:var(--tx3)}
+.waitlist-input:focus{border-color:var(--gold)}
+.waitlist-btn{background:var(--gold);color:#fff;border:none;padding:16px 28px;border-radius:14px;font-weight:800;font-size:15px;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Inter',sans-serif}
+.waitlist-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(255,51,102,.4)}
+.waitlist-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.success-msg{display:none;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.3);color:var(--cyan);padding:16px 24px;border-radius:14px;font-weight:600;text-align:center;max-width:480px;width:100%}
+.hero-stats{display:flex;gap:40px;margin-top:64px;flex-wrap:wrap;justify-content:center}
+.stat{text-align:center}
+.stat-num{font-size:28px;font-weight:900}
+.stat-label{font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+.section{padding:100px 40px;max-width:1100px;margin:0 auto}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.section-title{font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:16px}
+.section-sub{color:var(--tx2);font-size:17px;max-width:480px;line-height:1.7}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:48px}
+.feature-card{background:var(--gray);border:1px solid var(--border);border-radius:20px;padding:28px;transition:border-color .2s,transform .2s}
+.feature-card:hover{border-color:rgba(255,51,102,.3);transform:translateY(-2px)}
+.feature-icon{font-size:32px;margin-bottom:16px}
+.feature-title{font-size:17px;font-weight:700;margin-bottom:8px}
+.feature-desc{color:var(--tx2);font-size:14px;line-height:1.6}
+.how-section{padding:100px 40px;background:linear-gradient(to bottom,transparent,rgba(255,51,102,.03),transparent)}
+.how-inner{max-width:1100px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:32px;margin-top:56px}
+.step{text-align:center;padding:0 16px}
+.step-num{width:48px;height:48px;border-radius:50%;background:rgba(255,51,102,.12);border:1px solid rgba(255,51,102,.3);color:var(--gold);font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+.step-title{font-size:17px;font-weight:700;margin-bottom:10px}
+.step-desc{color:var(--tx2);font-size:14px;line-height:1.6}
+.proof-section{padding:80px 40px}
+.proof-inner{max-width:1100px;margin:0 auto;text-align:center}
+.proof-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:48px}
+.proof-card{background:var(--gray);border:1px solid var(--border);border-radius:20px;padding:24px;text-align:left}
+.proof-stars{color:#FFD700;font-size:14px;margin-bottom:12px}
+.proof-text{color:var(--tx2);font-size:14px;line-height:1.6;margin-bottom:16px;font-style:italic}
+.proof-author{font-weight:700;font-size:13px}
+.proof-role{color:var(--tx3);font-size:12px;margin-top:2px}
+.cta-section{padding:100px 40px;text-align:center;position:relative;overflow:hidden}
+.cta-glow{position:absolute;width:800px;height:400px;background:radial-gradient(ellipse,rgba(255,51,102,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.cta-inner{max-width:600px;margin:0 auto;position:relative;z-index:1}
+.cta-title{font-size:clamp(32px,5vw,56px);font-weight:900;letter-spacing:-1.5px;margin-bottom:20px}
+.cta-sub{color:var(--tx2);font-size:17px;margin-bottom:40px;line-height:1.7}
+footer{border-top:1px solid var(--border);padding:40px;text-align:center;color:var(--tx3);font-size:13px}
+footer a{color:var(--tx3);text-decoration:none}
+footer a:hover{color:var(--gold)}
+.divider{width:100%;height:1px;background:var(--border);max-width:1100px;margin:0 auto}
+.cat-pill{display:inline-flex;align-items:center;gap:8px;background:var(--gray);border:1px solid var(--border);padding:10px 18px;border-radius:100px;font-size:14px;font-weight:600;margin:4px}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+@media(max-width:768px){nav{padding:16px 20px}.section,.how-section,.proof-section,.cta-section{padding:60px 20px}footer{padding:32px 20px}.hero-stats{gap:24px}.waitlist-form{flex-direction:column}.waitlist-input,.waitlist-btn{width:100%}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><div class="logo-dot"></div>CityPulse<span style="color:var(--gold)">NG</span></div>
+  <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="badge"><div class="badge-dot"></div>Lagos · Coming Soon</div>
+  <h1>Your City.<br><span>All in One</span> App.</h1>
+  <p class="hero-sub">Order food, book tables, buy event tickets, and reserve hotels — without switching apps. Built for Lagos.</p>
+
+  <div id="waitlist" style="width:100%;max-width:480px;display:flex;flex-direction:column;align-items:center;gap:12px;">
+    <form class="waitlist-form" onsubmit="submitWaitlist(event)">
+      <input type="email" class="waitlist-input" placeholder="Enter your email address" required />
+      <button type="submit" class="waitlist-btn">Get Early Access →</button>
+    </form>
+    <div class="success-msg" id="successMsg">🎉 You're on the list! We'll notify you on launch day.</div>
+    <p style="color:var(--tx3);font-size:12px;">No spam. Launch notifications only.</p>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num" id="waitlistCount">—</div><div class="stat-label">On Waitlist</div></div>
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Services in 1 App</div></div>
+    <div class="stat"><div class="stat-num">Lagos</div><div class="stat-label">Starting Here</div></div>
+  </div>
+</section>
+
+<section class="section fade-up">
+  <p class="section-label">What We Built</p>
+  <h2 class="section-title">Everything Lagos needs<br>in one place</h2>
+  <p class="section-sub">No more juggling five different apps for your Friday night out.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">🍽️</div><div class="feature-title">Food & Dining</div><div class="feature-desc">Order from top Lagos restaurants. Dine-in or pickup. Real menus, real prices.</div></div>
+    <div class="feature-card"><div class="feature-icon">📅</div><div class="feature-title">Table Reservations</div><div class="feature-desc">Reserve your table at the best restaurants. Pre-order food before you arrive.</div></div>
+    <div class="feature-card"><div class="feature-icon">🎫</div><div class="feature-title">Events & Tickets</div><div class="feature-desc">Buy tickets to concerts, art shows and club nights. QR tickets on your phone.</div></div>
+    <div class="feature-card"><div class="feature-icon">🏠</div><div class="feature-title">Hotels & Shortlets</div><div class="feature-desc">Book hotels across Lekki, Ikoyi, VI and Lagos Island. Instant confirmation.</div></div>
+    <div class="feature-card"><div class="feature-icon">💳</div><div class="feature-title">CityPulse Wallet</div><div class="feature-desc">One wallet for everything. Top up once, spend everywhere on the platform.</div></div>
+    <div class="feature-card"><div class="feature-icon">⚡</div><div class="feature-title">CPP Rewards</div><div class="feature-desc">Earn points on every order. Redeem for wallet credit. The more you use, the more you save.</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="how-section fade-up">
+  <div class="how-inner">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Your full Lagos night out,<br>planned in minutes</h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-title">Book your stay</div><div class="step-desc">Find a shortlet in Lekki. Book and pay instantly.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-title">Get your tickets</div><div class="step-desc">Discover events. Buy VIP tickets. QR delivered instantly.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-title">Reserve your table</div><div class="step-desc">Pre-book dinner before the show. Food ready when you arrive.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-title">Earn rewards</div><div class="step-desc">Collect CPP points on everything. Redeem for your next night out.</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="proof-section fade-up">
+  <div class="proof-inner">
+    <p class="section-label">Early Feedback</p>
+    <h2 class="section-title">Lagos has been waiting for this</h2>
+    <div class="proof-grid">
+      <div class="proof-card"><div class="proof-stars">★★★★★</div><div class="proof-text">"Finally one app that actually understands how Lagos people move."</div><div class="proof-author">Temi A.</div><div class="proof-role">Lagos Island</div></div>
+      <div class="proof-card"><div class="proof-stars">★★★★★</div><div class="proof-text">"As a restaurant owner, having one platform for orders and reservations is a game changer."</div><div class="proof-author">Biodun K.</div><div class="proof-role">Restaurant Owner, VI</div></div>
+      <div class="proof-card"><div class="proof-stars">★★★★★</div><div class="proof-text">"I book my shortlet and events from London before I even land in Lagos."</div><div class="proof-author">Seun O.</div><div class="proof-role">Diaspora, London</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section class="cta-section fade-up">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <h2 class="cta-title">Be first in<br><span style="color:var(--gold)">Lagos</span></h2>
+    <p class="cta-sub">Early access users get exclusive launch offers and double CPP points for the first 30 days.</p>
+    <form class="waitlist-form" style="justify-content:center;max-width:480px;margin:0 auto;" onsubmit="submitWaitlist(event)">
+      <input type="email" class="waitlist-input" placeholder="Your email address" required />
+      <button type="submit" class="waitlist-btn">Join Waitlist →</button>
+    </form>
+    <div style="margin-top:24px;">
+      <span class="cat-pill">🍽️ Food</span>
+      <span class="cat-pill">🎫 Events</span>
+      <span class="cat-pill">🏠 Hotels</span>
+      <span class="cat-pill">📅 Reservations</span>
+      <span class="cat-pill">⚡ Rewards</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;"><div class="logo-dot"></div><strong>CityPulse NG</strong></div>
+  <p style="margin-bottom:12px;">Lagos · Nigeria · Launching 2026</p>
+  <p><a href="mailto:hello@city-pulse.live">hello@city-pulse.live</a> &nbsp;·&nbsp; <a href="#">Privacy</a> &nbsp;·&nbsp; <a href="#">Terms</a></p>
+  <p style="margin-top:16px;">© 2026 CityPulse NG. All rights reserved.</p>
+</footer>
+
+<script>
+async function submitWaitlist(e) {
+  e.preventDefault();
+  const form = e.target;
+  const emailInput = form.querySelector('input[type="email"]');
+  const btn = form.querySelector('button');
+  const email = emailInput.value.trim();
+  if (!email) return;
+  btn.disabled = true;
+  btn.textContent = 'Joining...';
+  try {
+    const res = await fetch('https://appealing-solace-production.up.railway.app/api/waitlist', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      const s = document.getElementById('successMsg');
+      if (s) s.style.display = 'block';
+      else { btn.textContent = "You're on the list! 🎉"; btn.style.background = '#00D4FF'; }
+      loadCount();
+    } else {
+      const d = await res.json();
+      btn.textContent = d.error === 'Email already registered' ? "Already on the list! 🎉" : 'Try Again';
+      if (d.error !== 'Email already registered') btn.disabled = false;
+      else btn.style.background = '#00D4FF';
+    }
+  } catch(err) { btn.textContent = 'Join Waitlist →'; btn.disabled = false; }
+}
+
+async function loadCount() {
+  try {
+    const res = await fetch('https://appealing-solace-production.up.railway.app/api/waitlist/count');
+    if (res.ok) {
+      const d = await res.json();
+      document.querySelectorAll('#waitlistCount').forEach(el => el.textContent = Number(d.count).toLocaleString() + '+');
+    }
+  } catch(e) {}
+}
+loadCount();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
